@@ -345,7 +345,7 @@ class INVATRBL_Plugin
                 ?>
             </form>
             <p>
-                <a href="https://www.ip2location.io/pricing" target="_blank" class="button button-secondary">Get IP2Location.io API Key</a>
+                <a href="https://www.ip2location.io/?a=38518" target="_blank" class="button button-secondary">Get IP2Location.io API Key</a>
             </p>
             <!-- Buttons will be handled by admin.js -->
             <p>
