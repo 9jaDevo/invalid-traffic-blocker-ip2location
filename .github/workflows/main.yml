@@ -14,10 +14,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-        - name: Exclude hidden files and test-api.php
-          run: |
-          find . -type f -name ".*" -exec rm -f {} \;
-          rm -f test-api.php
+    - name: Exclude hidden files and test-api.php
+      run: |
+         find . -type f -name ".*" -exec rm -f {} \;
+         rm -f test-api.php
 
     - name: Run plugin check
       uses: wordpress/plugin-check-action@v1
