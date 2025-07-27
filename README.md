@@ -34,7 +34,7 @@ Invalid Traffic Blocker is a WordPress plugin that uses the IP2Location.io API t
 
 ### How do I configure the plugin?
 
-After activating the plugin, go to `Settings > Invalid Traffic Blocker`. Here you can enter your API key, select a blocking mode, and manage your IP whitelist.
+After activating the plugin, go to `Settings > Invalid Traffic Blocker`. Here you can enter your API key, enable proxy/VPN blocking, and manage your IP whitelist.
 
 ### What if my API key is missing or invalid?
 
@@ -53,15 +53,15 @@ Click the "Whitelist My IP" button on the settings page to add your current IP a
 ### 2.0
 
 - **BREAKING CHANGE**: Migrated from IPHub.info API to IP2Location.io API.
+- **BREAKING CHANGE**: Simplified blocking system - removed confusing Safe/Strict/Custom modes.
 - Updated API endpoints and request format to use IP2Location.io's REST API.
 - Modified blocking logic to use IP2Location.io's `is_proxy` boolean field instead of IPHub's numeric block values.
-- Updated Safe Mode to block IPs where `is_proxy` is true.
-- Updated Strict Mode to function the same as Safe Mode (IP2Location.io uses boolean proxy detection).
-- Updated Custom Mode to allow selection of proxy blocking based on `is_proxy` field.
+- Simplified to single "Block Proxies and VPNs" option instead of multiple redundant modes.
 - Updated API connectivity testing to work with IP2Location.io format.
 - Updated all references from IPHub.info to IP2Location.io in UI and documentation.
 - Improved error handling for IP2Location.io API responses.
 - Updated registration link to point to IP2Location.io pricing page.
+- Streamlined user interface for better clarity and ease of use.
 
 ### 1.3
 - Added “Allow Known Crawlers” setting to automatically bypass IP checks for common search engine bots (Googlebot, Bingbot, Slurp, DuckDuckBot, Baiduspider, YandexBot).
@@ -94,7 +94,7 @@ Click the "Whitelist My IP" button on the settings page to add your current IP a
 
 ### 2.0
 
-This is a major update that migrates from IPHub.info to IP2Location.io API. You will need to obtain a new API key from IP2Location.io and update your settings. The plugin now uses IP2Location.io's boolean proxy detection system instead of IPHub's numeric block values.
+This is a major update that migrates from IPHub.info to IP2Location.io API. You will need to obtain a new API key from IP2Location.io and update your settings. The plugin now uses a simplified blocking system with IP2Location.io's boolean proxy detection instead of the previous multiple blocking modes.
 
 ### 1.3
 
@@ -102,7 +102,7 @@ This update adds an option to allow known search engine crawlers and custom User
 
 ## Screenshots
 
-1. Admin settings page with API key, blocking mode options, and whitelist functionality.
+1. Admin settings page with API key, proxy blocking option, and whitelist functionality.
 2. API connectivity test output showing a green info box on success.
 3. Warning message for blocked users.
 

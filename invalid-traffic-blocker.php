@@ -115,17 +115,8 @@ class INVATRBL_Plugin
         // Blocking mode checkboxes.
         add_settings_field(
             'blocking_modes',
-            'Blocking Options (Select one)',
+            'Proxy/VPN Blocking',
             [$this, 'invatrbl_render_blocking_modes_field'],
-            'invalid_traffic_blocker',
-            'invatrbl_main_section'
-        );
-
-        // Custom Mode: Select specific block types.
-        add_settings_field(
-            'custom_block_options',
-            'Custom Block Options',
-            [$this, 'invatrbl_render_custom_block_options_field'],
             'invalid_traffic_blocker',
             'invatrbl_main_section'
         );
@@ -176,33 +167,8 @@ class INVATRBL_Plugin
         $new_input['api_key'] = isset($input['api_key']) ? sanitize_text_field($input['api_key']) : '';
         $new_input['enabled'] = isset($input['enabled']) ? absint($input['enabled']) : 0;
 
-        // Blocking modes.
-        $new_input['safe_mode']   = isset($input['safe_mode']) ? 1 : 0;
-        $new_input['strict_mode'] = isset($input['strict_mode']) ? 1 : 0;
-        $new_input['custom_mode'] = isset($input['custom_mode']) ? 1 : 0;
-
-        // For custom mode, store allowed block types.
-        if (! empty($new_input['custom_mode'])) {
-            $custom = array();
-            if (isset($input['custom_block_options']) && is_array($input['custom_block_options'])) {
-                foreach ($input['custom_block_options'] as $block_option) {
-                    $custom[] = sanitize_text_field($block_option);
-                }
-            }
-            $new_input['custom_block_options'] = $custom;
-        } else {
-            $new_input['custom_block_options'] = array();
-        }
-
-        // Ensure only one blocking mode is active.
-        $modes_active = (int)$new_input['safe_mode'] + (int)$new_input['strict_mode'] + (int)$new_input['custom_mode'];
-        if ($modes_active > 1) {
-            add_settings_error('invatrbl_options', 'mode_error', 'Please select only one blocking mode option.', 'error');
-            $new_input['safe_mode']   = 1;
-            $new_input['strict_mode'] = 0;
-            $new_input['custom_mode'] = 0;
-            $new_input['custom_block_options'] = array();
-        }
+        // Simplified proxy blocking.
+        $new_input['block_proxies'] = isset($input['block_proxies']) ? 1 : 0;
 
         // Sanitize the whitelist.
         if (isset($input['whitelisted_ips'])) {
@@ -276,35 +242,13 @@ class INVATRBL_Plugin
     public function invatrbl_render_blocking_modes_field()
     {
         $options = get_option($this->option_name);
-        $safe   = isset($options['safe_mode']) ? (int)$options['safe_mode'] : 0;
-        $strict = isset($options['strict_mode']) ? (int)$options['strict_mode'] : 0;
-        $custom = isset($options['custom_mode']) ? (int)$options['custom_mode'] : 0;
+        $block_proxies = isset($options['block_proxies']) ? (int)$options['block_proxies'] : 1; // Default enabled
     ?>
         <label>
-            <input type="checkbox" name="<?php echo esc_attr($this->option_name); ?>[safe_mode]" value="1" <?php checked($safe, 1); ?> /> Safe Mode (Block only confirmed proxies/VPNs: is_proxy == true)
-        </label><br />
-        <label>
-            <input type="checkbox" name="<?php echo esc_attr($this->option_name); ?>[strict_mode]" value="1" <?php checked($strict, 1); ?> /> Strict Mode (Same as Safe Mode - IP2Location.io uses boolean proxy detection)
-        </label><br />
-        <label>
-            <input type="checkbox" name="<?php echo esc_attr($this->option_name); ?>[custom_mode]" value="1" <?php checked($custom, 1); ?> /> Custom Mode (Advanced proxy detection with additional filters)
+            <input type="checkbox" name="<?php echo esc_attr($this->option_name); ?>[block_proxies]" value="1" <?php checked($block_proxies, 1); ?> /> 
+            Block Proxies and VPNs
         </label>
-        <p><em>Please select only one mode. Safe Mode is recommended.</em></p>
-    <?php
-    }
-
-    /**
-     * Render custom block options (for custom mode).
-     */
-    public function invatrbl_render_custom_block_options_field()
-    {
-        $options = get_option($this->option_name);
-        $custom_options = isset($options['custom_block_options']) ? (array)$options['custom_block_options'] : array();
-    ?>
-        <label>
-            <input type="checkbox" name="<?php echo esc_attr($this->option_name); ?>[custom_block_options][]" value="proxy" <?php checked(in_array('proxy', $custom_options)); ?> /> Block Proxies/VPNs (is_proxy == true)
-        </label><br />
-        <p class="description">Custom mode currently offers the same protection as Safe mode. IP2Location.io uses boolean proxy detection.</p>
+        <p class="description">When enabled, visitors using proxies or VPNs (where is_proxy is true) will be blocked from accessing your site.</p>
     <?php
     }
 
@@ -569,20 +513,8 @@ class INVATRBL_Plugin
         }
 
         $block_ip = false;
-        if (! empty($options['safe_mode'])) {
-            if (isset($ip_data['is_proxy']) && $ip_data['is_proxy'] === true) {
-                $block_ip = true;
-            }
-        } elseif (! empty($options['strict_mode'])) {
-            // Strict mode: same as safe mode for IP2Location.io
-            if (isset($ip_data['is_proxy']) && $ip_data['is_proxy'] === true) {
-                $block_ip = true;
-            }
-        } elseif (! empty($options['custom_mode'])) {
-            $custom_options = isset($options['custom_block_options']) ? (array)$options['custom_block_options'] : array();
-            if (isset($ip_data['is_proxy']) && $ip_data['is_proxy'] === true && in_array('proxy', $custom_options)) {
-                $block_ip = true;
-            }
+        if (! empty($options['block_proxies']) && isset($ip_data['is_proxy']) && $ip_data['is_proxy'] === true) {
+            $block_ip = true;
         }
 
         if ($block_ip) {
