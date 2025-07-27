@@ -245,7 +245,7 @@ class INVATRBL_Plugin
         $block_proxies = isset($options['block_proxies']) ? (int)$options['block_proxies'] : 1; // Default enabled
     ?>
         <label>
-            <input type="checkbox" name="<?php echo esc_attr($this->option_name); ?>[block_proxies]" value="1" <?php checked($block_proxies, 1); ?> /> 
+            <input type="checkbox" name="<?php echo esc_attr($this->option_name); ?>[block_proxies]" value="1" <?php checked($block_proxies, 1); ?> />
             Block Proxies and VPNs
         </label>
         <p class="description">When enabled, visitors using proxies or VPNs (where is_proxy is true) will be blocked from accessing your site.</p>
