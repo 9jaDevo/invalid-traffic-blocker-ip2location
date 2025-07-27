@@ -38,6 +38,7 @@ Yes, you can update the list of whitelisted IP addresses at any time from the se
 Click the "Whitelist My IP" button on the settings page to add your current IP address to the whitelist.
 
 == Changelog ==
+
 = 1.3 =
 * Added “Allow Known Crawlers” setting to automatically bypass IP checks for common search engine bots (Googlebot, Bingbot, Slurp, DuckDuckBot, Baiduspider, YandexBot).
 * Introduced “Additional Crawler Patterns” textarea so admins can specify extra User-Agent regexes to whitelist.
