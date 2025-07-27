@@ -1,26 +1,7 @@
 # Invalid Traffic Blocker
 
-**Contributors:** mao## Changelog
-
-### 2.0
-- **BREAKING CHANGE**: Migrated from IPHub.info API to IP2Location.io API.
-- Updated API endpoints and request format to use IP2Location.io's REST API.
-- Modified blocking logic to use IP2Location.io's `is_proxy` boolean field instead of IPHub's numeric block values.
-- Updated Safe Mode to block IPs where `is_proxy` is true.
-- Updated Strict Mode to function the same as Safe Mode (IP2Location.io uses boolean proxy detection).
-- Updated Custom Mode to allow selection of proxy blocking based on `is_proxy` field.
-- Updated API connectivity testing to work with IP2Location.io format.
-- Updated all references from IPHub.info to IP2Location.io in UI and documentation.
-- Improved error handling for IP2Location.io API responses.
-- Updated registration link to point to IP2Location.io pricing page.
-
-### 1.3
-- Added "Allow Known Crawlers" setting to automatically bypass IP checks for common search engine bots (Googlebot, Bingbot, Slurp, DuckDuckBot, Baiduspider, YandexBot).
-- Introduced "Additional Crawler Patterns" textarea so admins can specify extra User-Agent regexes to whitelist.
-- Updated `invatrbl_check_visitor_ip()` to use `filter_input()` and `sanitize_text_field()` when reading `$_SERVER['HTTP_USER_AGENT']` to comply with WP security standards.
-- Ensured User-Agent checks are fully sanitized to eliminate any `InputNotSanitized` warnings during plugin review.
-- Streamlined front-end blocking logic so known crawlers (built-in or custom) are skipped before performing IPHub API lookups.
-- Minor code refactoring and cleanup to align with WordPress Plugin Coding Standards.**Tags:** invalid traffic, blocker, ip, adsense, vpn  
+**Contributors:** maocular
+**Tags:** invalid traffic, blocker, ip, adsense, vpn  
 **Requires at least:** 4.5  
 **Tested up to:** 6.8  
 **Stable tag:** 2.0  
@@ -68,6 +49,19 @@ Yes, you can update the list of whitelisted IP addresses at any time from the se
 Click the "Whitelist My IP" button on the settings page to add your current IP address to the whitelist.
 
 ## Changelog
+
+### 2.0
+
+- **BREAKING CHANGE**: Migrated from IPHub.info API to IP2Location.io API.
+- Updated API endpoints and request format to use IP2Location.io's REST API.
+- Modified blocking logic to use IP2Location.io's `is_proxy` boolean field instead of IPHub's numeric block values.
+- Updated Safe Mode to block IPs where `is_proxy` is true.
+- Updated Strict Mode to function the same as Safe Mode (IP2Location.io uses boolean proxy detection).
+- Updated Custom Mode to allow selection of proxy blocking based on `is_proxy` field.
+- Updated API connectivity testing to work with IP2Location.io format.
+- Updated all references from IPHub.info to IP2Location.io in UI and documentation.
+- Improved error handling for IP2Location.io API responses.
+- Updated registration link to point to IP2Location.io pricing page.
 
 ### 1.3
 - Added “Allow Known Crawlers” setting to automatically bypass IP checks for common search engine bots (Googlebot, Bingbot, Slurp, DuckDuckBot, Baiduspider, YandexBot).
