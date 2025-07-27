@@ -27,7 +27,7 @@
 **License:** GPLv2 or later  
 **License URI:** [https://www.gnu.org/licenses/gpl-2.0.html](https://www.gnu.org/licenses/gpl-2.0.html)  
 **Requires PHP:** 7.2  
-**Text Domain:** invalid-traffic-blocker  
+**Text Domain:** invalid-traffic-blocker-ip2location  
 
 ## Short Description
 
@@ -119,5 +119,5 @@ Data transmitted:
 Purpose:
   • To determine if the IP is a proxy/VPN (is_proxy field) and decide whether to block access.
 Terms and Privacy:
-  • IP2Location.io Terms of Service: [https://www.ip2location.io/terms](https://www.ip2location.io/terms)
+  • IP2Location.io Terms of Service: [https://www.ip2location.io/terms-of-service](https://www.ip2location.io/terms-of-service)
   • IP2Location.io Privacy Policy: [https://www.ip2location.io/privacy-policy](https://www.ip2location.io/privacy-policy)

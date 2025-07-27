@@ -9,15 +9,18 @@
 - Improved error handling for API responses
 - Migration guide documentation
 - Test script for API connectivity verification
+- Translation support documentation
 
 ### Changed
 - **BREAKING**: Migrated from IPHub.info to IP2Location.io API
+- **BREAKING**: Text domain changed from `invalid-traffic-blocker` to `invalid-traffic-blocker-ip2location`
 - API endpoint from `http://v2.api.iphub.info/ip/` to `https://api.ip2location.io/`
 - Authentication method from X-Key header to URL parameter
 - Blocking logic from numeric `block` values to boolean `is_proxy` field
 - Plugin version from 1.3 to 2.0
 - All UI references from IPHub.info to IP2Location.io
 - Registration link updated to IP2Location.io pricing page
+- Updated all translatable strings to use new text domain
 
 ### Improved
 - API response timeout increased from 5 to 10 seconds

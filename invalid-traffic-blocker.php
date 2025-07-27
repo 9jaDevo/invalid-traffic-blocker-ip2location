@@ -10,7 +10,7 @@
  * Author URI: https://michaelakinwumi.com/
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: invalid-traffic-blocker
+ * Text Domain: invalid-traffic-blocker-ip2location
  * Requires at least: 4.5
  * Requires PHP: 7.2
  */
@@ -346,7 +346,7 @@ class INVATRBL_Plugin
             <input type="checkbox"
                 name="<?php echo esc_attr($this->option_name); ?>[allow_crawlers]"
                 value="1" <?php checked($checked, 1); ?> />
-            <?php esc_html_e('Skip IP check for known crawler User-Agents', 'invalid-traffic-blocker'); ?>
+            <?php esc_html_e('Skip IP check for known crawler User-Agents', 'invalid-traffic-blocker-ip2location'); ?>
         </label>
     <?php
     }
@@ -359,9 +359,9 @@ class INVATRBL_Plugin
         <textarea
             name="<?php echo esc_attr($this->option_name); ?>[additional_crawlers]"
             rows="3" cols="50"
-            placeholder="<?php esc_attr_e('One regex per line, e.g. ^MyCustomBot', 'invalid-traffic-blocker'); ?>"><?php echo esc_textarea($value); ?></textarea>
+            placeholder="<?php esc_attr_e('One regex per line, e.g. ^MyCustomBot', 'invalid-traffic-blocker-ip2location'); ?>"><?php echo esc_textarea($value); ?></textarea>
         <p class="description">
-            <?php esc_html_e('Add any extra User-Agent patterns (one per line) to whitelist.', 'invalid-traffic-blocker'); ?>
+            <?php esc_html_e('Add any extra User-Agent patterns (one per line) to whitelist.', 'invalid-traffic-blocker-ip2location'); ?>
         </p>
     <?php
     }
@@ -423,13 +423,13 @@ class INVATRBL_Plugin
 
         // Verify user permissions.
         if (! current_user_can('manage_options')) {
-            wp_die(esc_html__('You are not allowed to perform this action.', 'invalid-traffic-blocker'));
+            wp_die(esc_html__('You are not allowed to perform this action.', 'invalid-traffic-blocker-ip2location'));
         }
 
         $options = get_option($this->option_name);
         if (empty($options['api_key'])) {
             echo '<div style="border: 1px solid red; padding:10px; background-color:#f2dede; color:#a94442;">'
-                . esc_html__('Error: API key is not set.', 'invalid-traffic-blocker')
+                . esc_html__('Error: API key is not set.', 'invalid-traffic-blocker-ip2location')
                 . '</div>';
             wp_die();
         }
@@ -444,7 +444,7 @@ class INVATRBL_Plugin
         if (is_wp_error($response)) {
             $error_message = $response->get_error_message();
             echo '<div style="border: 1px solid red; padding:10px; background-color:#f2dede; color:#a94442;">'
-                . esc_html__('Error: API Connection Error: ', 'invalid-traffic-blocker')
+                . esc_html__('Error: API Connection Error: ', 'invalid-traffic-blocker-ip2location')
                 . esc_html($error_message)
                 . '</div>';
             wp_die();
@@ -453,7 +453,7 @@ class INVATRBL_Plugin
         $code = wp_remote_retrieve_response_code($response);
         if ($code !== 200) {
             echo '<div style="border: 1px solid red; padding:10px; background-color:#f2dede; color:#a94442;">'
-                . esc_html__('Error: API Error: HTTP Code ', 'invalid-traffic-blocker')
+                . esc_html__('Error: API Error: HTTP Code ', 'invalid-traffic-blocker-ip2location')
                 . esc_html($code)
                 . '</div>';
             wp_die();
@@ -465,14 +465,14 @@ class INVATRBL_Plugin
         // Check if the response contains error
         if (isset($data['error'])) {
             echo '<div style="border: 1px solid red; padding:10px; background-color:#f2dede; color:#a94442;">'
-                . esc_html__('Error: API Error: ', 'invalid-traffic-blocker')
+                . esc_html__('Error: API Error: ', 'invalid-traffic-blocker-ip2location')
                 . esc_html($data['error']['error_message'])
                 . '</div>';
             wp_die();
         }
 
         echo '<div style="border: 1px solid green; padding:10px; background-color:#dff0d8; color:#3c763d;">'
-            . esc_html__('Success: API Response: ', 'invalid-traffic-blocker')
+            . esc_html__('Success: API Response: ', 'invalid-traffic-blocker-ip2location')
             . esc_html($body)
             . '</div>';
         wp_die();
@@ -592,7 +592,7 @@ class INVATRBL_Plugin
                 '<h1>Access Restricted</h1>
                 <p>Your access has been restricted because your IP address has been flagged as suspicious (e.g., use of VPN or invalid traffic).</p>
                 <p>Please disable your VPN or contact your network administrator if you believe this is an error.</p>',
-                esc_html__('Access Restricted', 'invalid-traffic-blocker'),
+                esc_html__('Access Restricted', 'invalid-traffic-blocker-ip2location'),
                 array(
                     'response'  => 403,
                     'back_link' => false,
